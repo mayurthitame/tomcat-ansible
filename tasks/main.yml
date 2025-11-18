@@ -1,6 +1,4 @@
----
-# tasks file for tomcat-ansible
-# # tasks file for tomcat
+# tasks file for tomcat
 #
 # ---------------------------
 # Prepare environment
@@ -26,7 +24,11 @@
         url: "{{ java_url }}"
         dest: "/opt/{{ java_archive }}"
         mode: '0644'
-
+    - name: Create a java directory if it does not exist
+      file:
+        path: "{{java_dir}}"
+        state: directory
+        mode: '0755'
     - name: Extract Java to directory
       unarchive:
         src: "/opt/{{ java_archive }}"
@@ -57,6 +59,12 @@
         url: "{{ tomcat_url }}"
         dest: "/opt/{{ tomcat_archive }}"
         mode: '0644'
+
+    - name: Create a tomcat directory if it does not exist
+      file:
+        path: "{{tomcat_dir}}"
+        state: directory
+        mode: '0755'
 
     - name: Extract Tomcat
       unarchive:
